@@ -18,6 +18,7 @@ const INITIAL_STATE = fromJS({
   w: 100,
   h: 100,
   s: 100,
+  light: { x: 100, y: 0 },
   gem: {
     vertices: [{
       theta: angles[45],
