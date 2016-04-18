@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 /**
  * Convert degrees to radians
  */
@@ -6,24 +8,11 @@ function rad(angle) {
 }
 
 /**
- * Square with circumradius r
+ * Polygon with circumradius r
  */
-export function square(r) {
-  return [
-    { theta: rad(45), r },
-    { theta: rad(315), r },
-    { theta: rad(225), r },
-    { theta: rad(135), r },
-  ];
-}
-
-/**
- * Triangle with circumradius r
- */
-export function triangle(r) {
-  return [
-    { theta: rad(90), r },
-    { theta: rad(210), r },
-    { theta: rad(330), r },
-  ];
+export default function polygon(sides, r) {
+  const t = 360 / sides;
+  return R.range(0, sides).map(idx => {
+    return { theta: rad(t * idx), r };
+  });
 }
