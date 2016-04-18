@@ -13,10 +13,10 @@ const INITIAL_STATE = fromJS({
   h: 100,
   s: 100,
   light: { x: 100, y: 0 },
-  gems: [0, 1, 2, 3, 4].map(idx => {
+  gems: [3, 4, 5, 6, 10].map((side, idx) => {
     return {
-      vertices: polygon(idx + 1, 10),
-      location: { x: 10 + idx * 20, y: 10 },
+      vertices: polygon(side, 5),
+      location: { x: 15 + idx * 15, y: 50 },
       color: clrs[idx],
     };
   }),

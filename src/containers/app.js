@@ -5,11 +5,23 @@ import Gem from '../components/gem';
 import { windowResize } from '../actions/canvas';
 
 function mapStateToProps(state) {
+  const w = state.canvas.get('w');
+  const h = state.canvas.get('h');
+
   return {
     w: state.canvas.get('w'),
     h: state.canvas.get('h'),
-    gems: state.canvas.get('gems').toJS(),
-    origin: { x: state.canvas.get('w') / 2, y: state.canvas.get('h') / 2 },
+    gems: state.canvas.get('gems').toJS().map(gem => {
+      return {
+        vertices: gem.vertices,
+        location: {
+          x: gem.location.x * w / 100,
+          y: gem.location.y * h / 100,
+        },
+        color: gem.color,
+      };
+    }),
+    origin: { x: w / 2, y: h / 2 },
   };
 }
 
@@ -38,7 +50,7 @@ class App extends Component {
         {
           gems.map((gem, idx) => {
             return (
-              <Gem key={idx} { ...gem } center={ this.props.origin } />
+              <Gem key={idx} { ...gem } center={ gem.location } />
             );
           })
         }
