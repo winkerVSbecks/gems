@@ -2,15 +2,9 @@ import {
   WINDOW_RESIZE,
 } from '../constants';
 import { fromJS } from 'immutable';
+import * as shapes from '../utils/shapes';
 
-const clrs = ['#FFE200', '#34A766', '#0072BB', '#DB3B43', '#FE7541'];
-const angles = {
-  45: Math.PI / 4,
-  90: Math.PI / 2,
-  135: 3 * Math.PI / 4,
-  225: 5 * Math.PI / 4,
-  315: 7 * Math.PI / 4,
-};
+const clrs = ['#34A766', '#FFE200', '#0072BB', '#DB3B43', '#FE7541', '#4E0250'];
 
 const INITIAL_STATE = fromJS({
   width: 100,
@@ -20,22 +14,19 @@ const INITIAL_STATE = fromJS({
   s: 100,
   light: { x: 100, y: 0 },
   gem: {
-    vertices: [{
-      theta: angles[45],
-      r: 10,
-    }, {
-      theta: angles[315],
-      r: 10,
-    }, {
-      theta: angles[225],
-      r: 10,
-    }, {
-      theta: angles[135],
-      r: 10,
-    }],
+    vertices: shapes.square(20),
     c: { x: 50, y: 50 },
     color: clrs[1],
   },
+  gems: [{
+    vertices: shapes.square(20),
+    c: { x: 50, y: 50 },
+    color: clrs[0],
+  }, {
+    vertices: shapes.triangle(20),
+    c: { x: 50, y: 50 },
+    color: clrs[1],
+  }],
 });
 
 function canvasReducer(state = INITIAL_STATE, action = {}) {

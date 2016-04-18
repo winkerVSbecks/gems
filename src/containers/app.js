@@ -8,8 +8,8 @@ function mapStateToProps(state) {
   return {
     w: state.canvas.get('w'),
     h: state.canvas.get('h'),
-    gem: state.canvas.get('gem').toJS(),
-    center: { x: state.canvas.get('w') / 2, y: state.canvas.get('h') / 2 },
+    gems: state.canvas.get('gems').toJS(),
+    origin: { x: state.canvas.get('w') / 2, y: state.canvas.get('h') / 2 },
   };
 }
 
@@ -31,11 +31,17 @@ class App extends Component {
   }
 
   render() {
-    const { gem } = this.props;
+    const { gems } = this.props;
 
     return (
       <Canvas { ...this.props }>
-        <Gem { ...gem } center={ this.props.center } />
+        {
+          gems.map((gem, idx) => {
+            return (
+              <Gem key={idx} { ...gem } center={ this.props.origin } />
+            );
+          })
+        }
       </Canvas>
     );
   }
@@ -52,9 +58,9 @@ class App extends Component {
 App.propTypes = {
   w: React.PropTypes.number,
   h: React.PropTypes.number,
-  gem: React.PropTypes.object,
+  gems: React.PropTypes.array,
   windowResize: React.PropTypes.func,
-  center: React.PropTypes.object,
+  origin: React.PropTypes.object,
 };
 
 export default connect(

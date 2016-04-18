@@ -50,8 +50,8 @@ export function makeCutVertices(vertices) {
   return [
     a,
     b,
-    { theta: b.theta, r: b.r * 2 },
-    { theta: a.theta, r: a.r * 2 },
+    { theta: b.theta, r: b.r * 0.5 },
+    { theta: a.theta, r: a.r * 0.5 },
   ];
 }
 

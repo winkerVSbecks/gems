@@ -26,6 +26,6 @@ Canvas.propTypes = {
   children: React.PropTypes.node,
 };
 
-const styles = { display: 'block' };
+const styles = { display: 'block', backgroundColor: '#4E0250' };
 
 export default Canvas;
