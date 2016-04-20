@@ -1,17 +1,20 @@
 import React from 'react';
 import Polygon from './polygon';
-import Color from 'color';
 import { makeCuts } from '../utils/geometry';
+import { lightFaces } from '../utils/lights';
 
-const Cuts = ({ vertices, color, center }) => {
+const Cuts = ({ vertices, color, location, lightSource, isGlowing }) => {
+  const faceColours =  lightFaces(vertices, location, lightSource,
+                                  color, isGlowing);
+
   return (
     <g>
       {
-        makeCuts(center, vertices).map((verts, idx) => {
+        makeCuts(location, vertices).map((cutVertices, idx) => {
           return (
             <Polygon key={idx}
-              points={ verts }
-              color={ Color(color).lighten(0.1 * idx).hexString() } />
+              points={ cutVertices }
+              color={ faceColours[idx] } />
           );
         })
       }
@@ -22,7 +25,9 @@ const Cuts = ({ vertices, color, center }) => {
 Cuts.propTypes = {
   vertices: React.PropTypes.array,
   color: React.PropTypes.string,
-  center: React.PropTypes.object,
+  location: React.PropTypes.object,
+  lightSource: React.PropTypes.array,
+  isGlowing: React.PropTypes.bool,
 };
 
 export default Cuts;

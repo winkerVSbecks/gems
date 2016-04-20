@@ -104,7 +104,7 @@
 /**
  * Style
  */
-    "indent": [2, 2],                // http://eslint.org/docs/rules/indent
+    "indent": [2, 2, { "SwitchCase": 1 }], // http://eslint.org/docs/rules/indent
     "brace-style": [2,               // http://eslint.org/docs/rules/brace-style
       "1tbs", {
       "allowSingleLine": true
@@ -165,7 +165,7 @@
     "react/jsx-uses-vars": 2,        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-uses-vars.md
     "react/no-did-mount-set-state": [2, "allow-in-func"], // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-mount-set-state.md
     "react/no-did-update-set-state": 2, // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md
-    "react/no-multi-comp": 2,        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
+    "react/no-multi-comp": [2, { "ignoreStateless": true }],        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md
     "react/no-unknown-property": 2,  // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md
     "react/prop-types": 2,           // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md
     "react/react-in-jsx-scope": 2,   // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md
