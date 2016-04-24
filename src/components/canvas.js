@@ -5,8 +5,9 @@ import React from 'react';
  * This component generates the base SVG
  * and sets up all the sub-components
  */
-const Canvas = ({ w, h, children }) => {
+const Canvas = ({ w, h, children, bgColor }) => {
   const viewBox = [0, 0, w, h].join(' ');
+  const styles = { display: 'block', backgroundColor: bgColor };
 
   return (
     <svg version="1.1"
@@ -24,8 +25,7 @@ Canvas.propTypes = {
   h: React.PropTypes.number,
   w: React.PropTypes.number,
   children: React.PropTypes.node,
+  bgColor: React.PropTypes.string,
 };
-
-const styles = { display: 'block', backgroundColor: '#4E0250' };
 
 export default Canvas;

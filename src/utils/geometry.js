@@ -3,12 +3,12 @@ import * as R from 'ramda';
 /**
  * Translate the origin for a poin
  */
-export function offsetTo(c) {
+export function offsetTo(p) {
   return function offsetToC(pt) {
     const [x, y] = pt;
     return [
-      x + c.x,
-      y + c.y,
+      p.x + x,
+      p.y - y,
     ];
   };
 }
@@ -26,9 +26,9 @@ export function generatePointsAtOrigin(vertices) {
   return vertices.map(polarToCartesian);
 }
 
-export function generatePointsAtOffset(c, vertices) {
+export function generatePointsAtOffset(p, vertices) {
   const pointsAtOrigin = generatePointsAtOrigin(vertices);
-  return pointsAtOrigin.map(offsetTo(c));
+  return pointsAtOrigin.map(offsetTo(p));
 }
 
 /**
@@ -59,8 +59,8 @@ export function makeCutVertices(vertices) {
  * Takes a side consisting of two vertices
  * and generates the pointDef for a cut
  */
-export function makeCut(center, sideVertices) {
-  const generatePointsAtC = R.partial(generatePointsAtOffset, [center]);
+export function makeCut(location, sideVertices) {
+  const generatePointsAtC = R.partial(generatePointsAtOffset, [location]);
   return R.compose(
     R.flatten,
     generatePointsAtC,
@@ -72,8 +72,8 @@ export function makeCut(center, sideVertices) {
  * Take a set of vertices defining a polygon
  * and generates a list of cuts. One per side.
  */
-export function makeCuts(center, gemVertices) {
-  const makeCutAtOffset = R.partial(makeCut, [center]);
+export function makeCuts(location, gemVertices) {
+  const makeCutAtOffset = R.partial(makeCut, [location]);
   return R.compose(
     R.map(makeCutAtOffset),
     getSides,
@@ -87,6 +87,12 @@ export function makeCuts(center, gemVertices) {
 export function getSides(vertices) {
   return [
     ...R.aperture(2, vertices),
-    [vertices[vertices.length - 1], vertices[0]],
+    [
+      vertices[vertices.length - 1],
+      {
+        r: vertices[0].r,
+        theta: vertices[0].theta === 0 ? 2 * Math.PI : vertices[0].theta,
+      },
+    ],
   ];
 }
