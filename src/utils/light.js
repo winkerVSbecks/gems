@@ -1,27 +1,20 @@
 import Color from 'color';
-import {
-  offsetTo,
-  polarToCartesian,
-  getSides,
-} from '../utils/geometry';
+import { offsetTo, polarToCartesian } from '../utils/geometry';
 
-export function lightFaces(vertices, location, lightPos, color, isGlowing) {
-  const sides = getSides(vertices);
+export function lightFace(location, light, color, isGlowing, side, idx) {
+  if (isGlowing) { return glowLight(color, idx); }
 
-  if (isGlowing) {
-    const clrEven = Color(color).lighten(0.25).hexString();
-    const clrOdd = Color(color).lighten(0.15).hexString();
-    return sides.map((side, idx) => {
-      return idx % 2 === 0 ? clrEven : clrOdd;
-    });
-  }
-
-  return sides.map((side) => {
-    return lightFace(side, color, location, lightPos);
-  });
+  return regularLight(side, color, location, light);
 }
 
-export function lightFace([a, b], color, location, lightPosition) {
+function glowLight(color, idx) {
+  const clrEven = Color(color).lighten(0.25).hexString();
+  const clrOdd = Color(color).lighten(0.15).hexString();
+
+  return idx % 2 === 0 ? clrEven : clrOdd;
+}
+
+function regularLight([a, b], color, location, light) {
   const theta = (a.theta + b.theta) / 2;
   const r = a.r * 0.75;
   const vertex = offsetTo(location)(polarToCartesian({ theta, r }));
@@ -38,8 +31,8 @@ export function lightFace([a, b], color, location, lightPosition) {
   ];
   // Direction of light
   const d = [
-    lightPosition[0] - vertex[0],
-    lightPosition[1] - vertex[1],
+    light[0] - vertex[0],
+    light[1] - vertex[1],
   ];
   const magD = Math.hypot(...d);
   // Normalized direction
@@ -57,4 +50,15 @@ export function lightFace([a, b], color, location, lightPosition) {
 
   const darkenAmt = Math.abs(Math.max(-0.25, intensity));
   return Color(color).darken(darkenAmt).hexString();
+}
+
+export function bloomColor(isGlowing, color) {
+  return isGlowing ? Color(color).lighten(0.4).hexString() : color;
+}
+
+export function glowColor(mixer, color) {
+  return Color(mixer)
+    .mix(Color(color))
+    .lighten(0.25)
+    .hexString();
 }

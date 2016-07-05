@@ -1,23 +1,26 @@
 import React from 'react';
 import {
-  patriotClrs,
-  processBlueClrs,
+  PATRIOT_CLRS,
+  PROCESS_BLUE_CLRS,
 } from '../constants';
 
-const Toolbar = ({ setPatriot, setProcessBlue }) => {
+function Toolbar({ onLeftClick, onRightClick }) {
   return (
     <div style={ styles.toolbar }>
-      <button style={ styles.button(patriotClrs.gems[0]) }
-        onClick={ setPatriot } />
-      <button style={ styles.button(processBlueClrs.gems[0]) }
-        onClick={ setProcessBlue } />
+
+      <button style={ styles.button(PATRIOT_CLRS.gems[0]) }
+        onClick={ onLeftClick } />
+
+      <button style={ styles.button(PROCESS_BLUE_CLRS.gems[0]) }
+        onClick={ onRightClick } />
+
     </div>
   );
-};
+}
 
 Toolbar.propTypes = {
-  setPatriot: React.PropTypes.func,
-  setProcessBlue: React.PropTypes.func,
+  onLeftClick: React.PropTypes.func.isRequired,
+  onRightClick: React.PropTypes.func.isRequired,
 };
 
 export default Toolbar;
