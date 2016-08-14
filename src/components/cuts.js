@@ -1,33 +1,25 @@
+import { List } from 'immutable';
 import React from 'react';
 import Polygon from './polygon';
-import { makeCuts } from '../utils/geometry';
-import { lightFaces } from '../utils/lights';
 
-const Cuts = ({ vertices, color, location, lightSource, isGlowing }) => {
-  const faceColours =  lightFaces(vertices, location, lightSource,
-                                  color, isGlowing);
-
+function Cuts({ cuts }) {
   return (
     <g>
       {
-        makeCuts(location, vertices).map((cutVertices, idx) => {
+        cuts.map((cut, idx) => {
           return (
-            <Polygon key={idx}
-              points={ cutVertices }
-              color={ faceColours[idx] } />
+            <Polygon key={ idx }
+              points={ cut.get('points') }
+              color={ cut.get('color') } />
           );
         })
       }
     </g>
   );
-};
+}
 
 Cuts.propTypes = {
-  vertices: React.PropTypes.array,
-  color: React.PropTypes.string,
-  location: React.PropTypes.object,
-  lightSource: React.PropTypes.array,
-  isGlowing: React.PropTypes.bool,
+  cuts: React.PropTypes.instanceOf(List).isRequired,
 };
 
 export default Cuts;

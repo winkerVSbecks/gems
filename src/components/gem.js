@@ -1,61 +1,39 @@
+import { Map, List } from 'immutable';
 import React from 'react';
-import Color from 'color';
 import Polygon from './polygon';
-import Glow from './glow';
 import Cuts from './cuts';
-import { generatePointDef, generatePointsAtOffset } from '../utils/geometry';
 
-const Gem = ({
-  idx,
-  vertices,
-  color,
-  location,
-  lightSource,
-  glowMixer,
-  isGlowing,
-  addGlow,
-  removeGlow,
-}) => {
-  const centerCutPoints = generatePointDef(
-    generatePointsAtOffset(location, vertices)
-  );
-
-  function onEnter() {
-    if (!isGlowing) {
-      addGlow(idx);
-    }
-  }
-
-  function onLeave() {
-    if (isGlowing) {
-      removeGlow(idx);
-    }
-  }
-
-  const clr = isGlowing ? Color(color).lighten(0.4).hexString() : color;
+function Gem({ idx, addGlow, removeGlow, glow, centerCut, cuts }) {
+  const onEnter = () => addGlow(idx);
+  const onLeave = () => removeGlow(idx);
 
   return (
     <g onMouseEnter={ onEnter } onMouseLeave={ onLeave }
       onTouchStart={ onEnter } onTouchEnd={ onLeave }>
-      <Glow points={ centerCutPoints }
-        color={ color } mixer={ glowMixer } enabled={ isGlowing } />
-      <Polygon points={ centerCutPoints }
-        color={ clr } />
-      <Cuts { ...{ vertices, color, location, lightSource, isGlowing } } />
+
+      <Polygon
+        points={ glow.get('points') }
+        color={ glow.get('color') }
+        filter={ glow.get('filter') }
+        opacity={ glow.get('opacity') } />
+
+      <Polygon
+        points={ centerCut.get('points') }
+        color={ centerCut.get('color') } />
+
+      <Cuts cuts={ cuts } />
+
     </g>
   );
-};
+}
 
 Gem.propTypes = {
-  idx: React.PropTypes.number,
-  vertices: React.PropTypes.array,
-  color: React.PropTypes.string,
-  location: React.PropTypes.object,
-  lightSource: React.PropTypes.array,
-  glowMixer: React.PropTypes.string,
-  isGlowing: React.PropTypes.bool,
-  addGlow: React.PropTypes.func,
-  removeGlow: React.PropTypes.func,
+  idx: React.PropTypes.number.isRequired,
+  addGlow: React.PropTypes.func.isRequired,
+  removeGlow: React.PropTypes.func.isRequired,
+  glow: React.PropTypes.instanceOf(Map).isRequired,
+  centerCut: React.PropTypes.instanceOf(Map).isRequired,
+  cuts: React.PropTypes.instanceOf(List).isRequired,
 };
 
 export default Gem;

@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 
 /**
- * Translate the origin for a poin
+ * Translate the origin for a point
  */
 export function offsetTo(p) {
   return function offsetToC(pt) {
@@ -60,29 +60,28 @@ export function makeCutVertices(vertices) {
  * and generates the pointDef for a cut
  */
 export function makeCut(location, sideVertices) {
-  const generatePointsAtC = R.partial(generatePointsAtOffset, [location]);
+  const generatePointsAtCenter = R.partial(generatePointsAtOffset, [location]);
   return R.compose(
     R.flatten,
-    generatePointsAtC,
+    generatePointsAtCenter,
     makeCutVertices,
   )(sideVertices);
 }
 
 /**
- * Take a set of vertices defining a polygon
- * and generates a list of cuts. One per side.
+ * Calculates the centre cut shape for a gem
  */
-export function makeCuts(location, gemVertices) {
-  const makeCutAtOffset = R.partial(makeCut, [location]);
-  return R.compose(
-    R.map(makeCutAtOffset),
-    getSides,
-  )(gemVertices);
-}
+export const calcCenterCutPoints = R.compose(
+  generatePointDef,
+  generatePointsAtOffset
+);
 
 /**
  * For a given set of points
  * generate a list of sides
+ * For example:
+ *  for points = [a, b, c, d];
+ *  we get the following sides: [[a,b], [b,c], [c,d], [d,a]]
  */
 export function getSides(vertices) {
   return [
@@ -95,4 +94,15 @@ export function getSides(vertices) {
       },
     ],
   ];
+}
+
+/**
+ * Coverts a location from width
+ * or height percent to pixels
+ */
+export function percentToPx(w, h, { x, y }) {
+  return {
+    x: x * w / 100,
+    y: y * h / 100,
+  };
 }
