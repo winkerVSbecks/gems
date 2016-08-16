@@ -17,7 +17,6 @@ export function windowResize({ width, height }) {
   return {
     type: WINDOW_RESIZE,
     payload: { width, height, w, h },
-    meta: { debounce: { time: 100 } },
   };
 }
 
