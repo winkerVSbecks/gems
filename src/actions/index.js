@@ -35,21 +35,18 @@ export function setPatriot() {
 /**
  * Move Light
  */
-export function moveLight(x, y) {
-  return (dispatch, getState) => {
-    const w = getState().canvas.get('w');
-    const h = getState().canvas.get('h');
-    const width = getState().canvas.get('width');
-    const height = getState().canvas.get('height');
+export function moveLight(x, y, canvas) {
+  const w = canvas.get('w');
+  const h = canvas.get('h');
+  const width = canvas.get('width');
+  const height = canvas.get('height');
 
-    const normX = x * w / width;
-    const normY = y * h / height;
+  const normX = x * w / width;
+  const normY = y * h / height;
 
-    dispatch({
-      type: MOVE_LIGHT_SOURCE,
-      payload: [normX, normY],
-      meta: { debounce: { time: 15 } },
-    });
+  return {
+    type: MOVE_LIGHT_SOURCE,
+    payload: [normX, normY],
   };
 }
 

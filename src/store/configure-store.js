@@ -1,6 +1,4 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import createDebounce from 'redux-debounced';
 import logger from './logger';
 import rootReducer from '../reducers';
 
@@ -14,10 +12,7 @@ function configureStore(initialState) {
 }
 
 function _getMiddleware() {
-  let middleware = [
-    thunk,
-    createDebounce(),
-  ];
+  let middleware = [];
 
   if (__DEV__) {
     middleware = [...middleware, logger];

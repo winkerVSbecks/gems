@@ -50,13 +50,13 @@ class App extends Component {
 
   handleMouseMove = (e) => {
     e.preventDefault();
-    this.props.moveLight(e.clientX, e.clientY);
+    this.props.moveLight(e.clientX, e.clientY, this.props.canvas);
   }
 
   handleTouchMove = (e) => {
     e.preventDefault();
     const touch = e.targetTouches[0];
-    this.props.moveLight(touch.clientX, touch.clientY);
+    this.props.moveLight(touch.clientX, touch.clientY, this.props.canvas);
   }
 
   handleResize = () => {
