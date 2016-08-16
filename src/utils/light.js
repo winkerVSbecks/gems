@@ -40,7 +40,7 @@ function regularLight([a, b], color, location, light) {
     d[0] / magD,
     d[1] / magD,
   ];
-  // intensity = dot(direction, ecNormal)
+  // intensity = dot(light direction, Normal)
   const intensity = normal[0] * direction[0] + normal[1] * direction[1];
 
   if (intensity > 0) {
@@ -52,7 +52,7 @@ function regularLight([a, b], color, location, light) {
   return Color(color).darken(darkenAmt).hexString();
 }
 
-export function bloomColor(isGlowing, color) {
+export function centerColor(isGlowing, color) {
   return isGlowing ? Color(color).lighten(0.4).hexString() : color;
 }
 

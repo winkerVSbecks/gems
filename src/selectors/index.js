@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { fromJS } from 'immutable';
 import { createSelector } from 'reselect';
-import { lightFace, bloomColor, glowColor } from '../utils/light';
+import { lightFace, centerColor, glowColor } from '../utils/light';
 import {
   getSides,
   makeCut,
@@ -39,7 +39,7 @@ function buildGemParts(w, h, glowMixer, light, gem) {
 function buildCenterCut(centerCutPts, isGlowing, color) {
   return {
     points: centerCutPts,
-    color: bloomColor(isGlowing, color),
+    color: centerColor(isGlowing, color),
   };
 }
 
