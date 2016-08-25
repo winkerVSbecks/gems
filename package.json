@@ -15,8 +15,7 @@
     "lint-css": "stylelint './src/**/*.css'",
     "lint-js": "eslint .",
     "postinstall": "npm run build",
-    "start": "cross-env NODE_ENV=production node server/node-server.js",
-    "deploy": "bash deploy.sh"
+    "start": "cross-env NODE_ENV=production node server/node-server.js"
   },
   "nyc": {
     "exclude": [
