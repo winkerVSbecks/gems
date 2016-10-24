@@ -7,7 +7,7 @@ import React from 'react';
  */
 function Canvas({ w, h, children, bgColor }) {
   const viewBox = [0, 0, w, h].join(' ');
-  const styles = { display: 'block', backgroundColor: bgColor };
+  const styles = { display: 'block', backgroundColor: bgColor, cursor: 'move' };
 
   return (
     <svg version="1.1"

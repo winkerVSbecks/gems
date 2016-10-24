@@ -5,6 +5,7 @@ import {
   SET_GLOW,
   PATRIOT_CLRS,
   PROCESS_BLUE_CLRS,
+  TOGGLE_ABOUT,
 } from '../constants';
 
 /**
@@ -74,4 +75,9 @@ export function removeGlow(idx) {
       value: false,
     },
   };
+}
+
+
+export function toggleAbout() {
+  return { type: TOGGLE_ABOUT };
 }

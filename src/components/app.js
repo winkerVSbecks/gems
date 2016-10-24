@@ -4,6 +4,7 @@ import Canvas from './canvas';
 import Gem from './gem';
 import Toolbar from './toolbar';
 import BlurFilter from './blur-filter';
+import About from './about';
 
 class App extends Component {
 
@@ -18,7 +19,13 @@ class App extends Component {
 
   render() {
     const { gems, canvas } = this.props;
-    const { setProcessBlue, setPatriot, addGlow, removeGlow } = this.props;
+    const {
+      setProcessBlue,
+      setPatriot,
+      addGlow,
+      removeGlow,
+      toggleAbout,
+    } = this.props;
 
     return (
       <div onMouseMove={ this.handleMouseMove }
@@ -44,6 +51,16 @@ class App extends Component {
             ))
           }
         </Canvas>
+
+        <div className="fixed bottom-0 left-0 caps m2 h6 flex items-center center px1 bold black"
+          style={{ height: '2rem', backgroundColor: '#fff', cursor: 'pointer' }}
+          onClick={ toggleAbout }>
+          About
+        </div>
+
+        <About isVisible={ canvas.get('isAboutVisible') }
+          toggleAbout={ toggleAbout } />
+
       </div>
     );
   }
@@ -77,6 +94,7 @@ App.propTypes = {
   moveLight: React.PropTypes.func.isRequired,
   addGlow: React.PropTypes.func.isRequired,
   removeGlow: React.PropTypes.func.isRequired,
+  toggleAbout: React.PropTypes.func.isRequired,
 };
 
 export default App;
